@@ -85,7 +85,9 @@ namespace FullStack.API.Controllers
 
             user.Name = updateUserRequest.Name;
             user.Email = updateUserRequest.Email;
-            user.Password = updateUserRequest.Password;
+            user.Nickname = updateUserRequest.Nickname;
+            user.Auth0Id = updateUserRequest.Auth0Id;
+            user.Picture = updateUserRequest.Picture;
 
             //Actualizarea in baza date a modificarilor
             await _fullStackDbContext.SaveChangesAsync();
@@ -124,7 +126,7 @@ namespace FullStack.API.Controllers
         [Route("login")]
         public async Task<IActionResult> GetUserId(string email,string password)
         {
-            var user = await _fullStackDbContext.USers.FirstOrDefaultAsync(x => (x.Email== email && x.Password == password));
+            var user = await _fullStackDbContext.USers.FirstOrDefaultAsync(x => x.Email== email );
 
             if (user == null)
             {
