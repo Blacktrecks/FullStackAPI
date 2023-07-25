@@ -42,6 +42,19 @@ namespace FullStack.API.Controllers
     [HttpPost]
         public async Task<IActionResult> AddUser([FromBody] User userRequest)
         {
+
+            // Asignarea Utilizatorului care are emailul selectat
+
+            var existingUser = await _fullStackDbContext.USers.FirstOrDefaultAsync(u => u.Email == userRequest.Email);
+
+            // Vreificarea daca Uilizatorul este in baza de date
+
+            if (existingUser != null)
+            {
+                return Ok(existingUser); // Return a 409 Conflict status if user already exists
+            }
+
+
             userRequest.Id = Guid.NewGuid();
 
             await _fullStackDbContext.USers.AddAsync(userRequest);
