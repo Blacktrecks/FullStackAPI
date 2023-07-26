@@ -11,11 +11,11 @@ namespace FullStack.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TasksController : ControllerBase
+    public class AssignmentController : ControllerBase
     {
         private readonly FullStackDbContext _context;
 
-        public TasksController(FullStackDbContext context)
+        public AssignmentController(FullStackDbContext context)
         {
             _context = context;
         }

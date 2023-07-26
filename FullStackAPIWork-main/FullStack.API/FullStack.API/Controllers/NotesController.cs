@@ -20,7 +20,7 @@ namespace FullStack.API.Controllers
             _context = context;
         }
 
-        // GET: api/Notes
+        // GET: api/notes
         [HttpGet]
         public async Task<IActionResult> GetNotes()
         {
@@ -30,7 +30,7 @@ namespace FullStack.API.Controllers
 
         // POST: api/Notes
         [HttpPost]
-        public async Task<IActionResult> CreateNote([FromBody] Note note)
+        public async Task<IActionResult> CreateAssignment([FromBody] Note note)
         {
             note.Id = Guid.NewGuid();
             _context.Notes.Add(note);
@@ -42,7 +42,7 @@ namespace FullStack.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetNote(Guid id)
         {
-            var note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+            var note = await _context.Notes.FirstOrDefaultAsync(t => t.Id == id);
             if (note == null)
             {
                 return NotFound();
@@ -52,17 +52,17 @@ namespace FullStack.API.Controllers
 
         // PUT: api/Notes/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateNote(Guid id, [FromBody] Note updatedNote)
+        public async Task<IActionResult> UpdateNote(Guid id, [FromBody] Note updatedTask)
         {
-            var note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+            var note = await _context.Notes.FirstOrDefaultAsync(t => t.Id == id);
             if (note == null)
             {
                 return NotFound();
             }
 
-            note.Title = updatedNote.Title;
-            note.Content = updatedNote.Content;
-            note.CreatedAt = updatedNote.CreatedAt;
+            note.Title = updatedTask.Title;
+            note.Content = updatedTask.Content;
+            note.Date = updatedTask.Date;
 
             await _context.SaveChangesAsync();
             return Ok(note);
@@ -72,7 +72,7 @@ namespace FullStack.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteNote(Guid id)
         {
-            var note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+            var note = await _context.Notes.FirstOrDefaultAsync(t => t.Id == id);
             if (note == null)
             {
                 return NotFound();
